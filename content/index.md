@@ -12,4 +12,6 @@ Bienvenido a mi bóveda de notas publicada automáticamente con **Obsidian + Qua
 
 ## Índice
 
-- [[Bienvenido]]
+- [[Bienvenido]] — objetivo, reglas de la bóveda y cómo se publica.
+- [[UML/index|Diagramas UML]] — 14 diagramas con 28 ejemplos PlantUML.
+- [[UML/ejemplo-completo|Ejemplo completo]] — armar un modelo paso a paso.

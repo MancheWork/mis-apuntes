@@ -82,7 +82,8 @@ foreach ($md in $mdFiles) {
             $dirRel = $md.DirectoryName.Substring($contentRoot.Length).TrimStart('\', '/') -replace '\\', '/'
             $imgRel = if ($dirRel) { "$dirRel/assets/$base.svg" } else { "assets/$base.svg" }
             $img = "![$($md.BaseName) - diagrama $index]($imgRel)`n`n"
-            $replacements += [pscustomobject]@{ Start = $m.Index; Length = $m.Length; Text = $img + $m.Value }
+            $fold = "<details>`n<summary>Ver codigo PlantUML</summary>`n`n"
+            $replacements += [pscustomobject]@{ Start = $m.Index; Length = $m.Length; Text = $img + $fold + $m.Value + "`n`n</details>" }
         }
     }
 

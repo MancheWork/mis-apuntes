@@ -13,8 +13,11 @@ En esta carpeta encontrarás los **14 diagramas oficiales de UML 2**, cada uno c
 - **2 ejemplos completos** en formato **PlantUML** (código que genera el diagrama).
 - Los errores más comunes al dibujarlo.
 
+> [!tip] Empieza por aquí
+> ¿Primera vez con UML? Ve al **[[ejemplo-completo]]**: un sistema de biblioteca armado paso a paso, con la **notación textual y la visual** explicadas símbolo a símbolo.
+
 > [!info] Cómo se publican los diagramas
-> El código PlantUML de cada nota se compila automáticamente a imagen (SVG) cada vez que subes un cambio. En **Obsidian** ves el código; en la **web** ves el código **y** el diagrama renderizado.
+> Cada bloque de código PlantUML se compila automáticamente a imagen (SVG) al subir un cambio. En **Obsidian** ves el código; en la **web** ves primero el **diagrama** y el código aparece **plegado** — pulsa *"Ver codigo PlantUML"* para desplegarlo cuando lo necesites.
 
 ## Diagramas estructurales (7)
 
