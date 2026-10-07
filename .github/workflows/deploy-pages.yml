@@ -24,6 +24,34 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup Java (PlantUML)
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Install Graphviz
+        run: |
+          if ! command -v dot >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y graphviz
+          fi
+
+      - name: Cache PlantUML jar
+        id: plantuml-cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.plantuml/plantuml.jar
+          key: plantuml-v1.2026.8
+
+      - name: Download PlantUML jar
+        if: steps.plantuml-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p "$HOME/.plantuml"
+          curl -fsSL -o "$HOME/.plantuml/plantuml.jar" https://github.com/plantuml/plantuml/releases/download/v1.2026.8/plantuml.jar
+
+      - name: Render PlantUML diagrams
+        run: pwsh -NoProfile -File scripts/render-plantuml.ps1 -ContentDir content -JarPath "$HOME/.plantuml/plantuml.jar" -Rewrite
+
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
