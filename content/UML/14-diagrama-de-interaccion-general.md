@@ -88,6 +88,84 @@ endif
 
 **Lectura:** *la llamada se registra, se bifurca según si el cliente es nuevo o no, luego dos validaciones corren **en paralelo** y el flujo se sincroniza antes de proponer la solución.*
 
+## Ejemplo completo — construirlo paso a paso
+
+*Objetivo: orquestar la atención de un ticket con **toda la notación de interacción generalizada**: `ref` a interacciones, decisión, bifurcación paralela, notas y nodos de control `start`/`stop`.*
+
+### Paso 1 — flujo con referencias
+
+**Añade:** nodo inicial `start`, nodos de **referencia** `ref [n]` (remite a la secuencia n) y `stop`.
+
+```plantuml
+@startuml
+start
+:ref [1] Registrar ticket;
+:ref [2] Asignar a agente;
+stop
+@enduml
+```
+
+### Paso 2 — decisión sobre referencias
+
+**Añade:** la **decisión** `if/else` que encadena referencias según el resultado.
+
+```plantuml
+@startuml
+start
+:ref [1] Registrar ticket;
+
+if (¿Cliente conocido?) then (si)
+  :ref [2] Consultar historial;
+  :ref [3] Proponer solucion;
+else (no)
+  :ref [4] Crear ficha nueva;
+  :ref [5] Validar datos;
+endif
+
+if (¿Resuelto?) then (si)
+  :ref [6] Cerrar ticket;
+  stop
+else (no)
+  :ref [7] Escalar;
+  stop
+endif
+@enduml
+```
+
+### Paso 3 — notación completa (paralelismo, nota y cierre)
+
+**Añade:** **bifurcación paralela** `fork` con `fork again`, `note` explicativa dentro de una rama y los dos cierres posibles (`stop`).
+
+```plantuml
+@startuml
+start
+:ref [1] Registrar ticket;
+
+fork
+  :ref [2] Consultar historial;
+fork again
+  :ref [3] Verificar SLA;
+end fork
+
+:ref [4] Proponer solucion;
+
+if (¿Acepta el cliente?) then (si)
+  :ref [5] Encuesta de satisfaccion;
+  note right
+    Cada nodo ref corresponde a
+    una secuencia numerada en la
+    documentacion del proceso.
+  end note
+  stop
+else (no)
+  :ref [6] Reabrir con motivos;
+  stop
+end if
+@enduml
+```
+
+**Cómo se lee el Paso 3:** el flujo se **bifurca en paralelo** (historial y SLA a la vez), se sincroniza antes de proponer solución y cada bloque `ref` es una secuencia completa que se documenta aparte; la nota fija esa convención de numeración.
+
 ## Errores comunes
 
 - Escribir **mensajes dentro del nodo de interacción**: el nodo solo **referencia** la interacción; los mensajes van en la secuencia `ref`.

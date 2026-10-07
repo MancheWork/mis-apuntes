@@ -85,6 +85,80 @@ back --> s3 : API S3
 
 **Lectura:** *todo vive en la nube: el frontend en un contenedor Nginx, el backend en Node, la base en un servicio gestionado y las imágenes en un bucket.*
 
+## Ejemplo completo — construirlo paso a paso
+
+*Objetivo: desplegar una tienda con **toda la notación de despliegue**: nodos físicos y lógicos, artefactos, caminos de comunicación etiquetados, estereotipos y notas.*
+
+### Paso 1 — nodos y artefactos
+
+**Añade:** `node` (hardware/servidor) y `artifact` (el software desplegado), unidos por camino de comunicación.
+
+```plantuml
+@startuml
+node "Servidor Web" as sw {
+  artifact "tienda.war" as war
+}
+node "Servidor de Datos" as sd {
+  artifact "postgres" as pg
+}
+
+war --> pg : consulta
+@enduml
+```
+
+### Paso 2 — nodos anidados y estereotipos
+
+**Añade:** nodos **dentro** de nodos (entorno de ejecución) y estereotipos `<<...>>` para tipificar nodo y artefacto.
+
+```plantuml
+@startuml
+node "Nube AWS" as nube <<plataforma>> {
+  node "EC2 - Linux" as ec2 <<computadora>> {
+    artifact "app.jar" as app <<artefacto>>
+    node "Docker" as docker <<contenedor>> {
+      artifact "imagen app" as img
+    }
+  }
+  node "RDS" as rds <<base-datos>> {
+    artifact " PostgreSQL 16 " as pgsql
+  }
+}
+
+app ..> img : empaqueta
+ec2 ..> rds : TCP/IP 5432
+@enduml
+```
+
+### Paso 3 — notación completa (caminos y dependencias)
+
+**Añade:** camino de comunicación **etiquetado** con protocolo, dependencia entre artefactos de nodos distintos, estereotipo de despliegue `<<despliega>>` en el enlace y nota de entorno.
+
+```plantuml
+@startuml
+cloud "Internet" as net
+
+node "Servidor de Aplicacion" as appsrv {
+  artifact "api-rest.jar" as api
+  node "nginx" as nginx <<servidor-web>>
+}
+node "Servidor de Base de Datos" as dbsrv {
+  artifact "MySQL" as mysql
+}
+
+net -- appsrv : HTTPS 443
+appsrv -- dbsrv : TCP 3306
+nginx ..> api : sirve
+api ..> mysql : JDBC
+
+note bottom of dbsrv
+  Datos cifrados en disco;
+  backup nocturno.
+end note
+@enduml
+```
+
+**Cómo se lee el Paso 3:** los nodos son las **máquinas**, los artefactos el **software** dentro de ellas, las líneas gruesas son **caminos de comunicación** con su protocolo (`HTTPS 443`, `TCP 3306`) y las flechas `..>` muestran qué artefacto depende de cuál.
+
 ## Errores comunes
 
 - Dibujar **clases** dentro de un nodo: dentro de un nodo van **artefactos** (archivos/ejecutables).

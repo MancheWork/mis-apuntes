@@ -75,6 +75,83 @@ component "Robot Limpia pisos" as robot {
 
 **Lectura:** *el robot tiene 4 partes internas; el Controlador recibe lecturas del sensor y órdenes del botón, y manda órdenes al Motor; el Gestor de batería alimenta a ambos.*
 
+## Ejemplo completo — construirlo paso a paso
+
+*Objetivo: abrir un equipo de limpieza robótico y ver **toda la notación de estructura compuesta**: partes anidadas, puertos, conectores, delegación y notas.*
+
+### Paso 1 — el componente con sus partes
+
+**Añade:** el componente contenedor con `{}` y las **partes** (subcomponentes) dentro, con los conectores entre ellas.
+
+```plantuml
+@startuml
+component "Robot LimpiaPisos" as robot {
+  component "Controlador" as ctrl
+  component "Recolector" as rec
+  component "Bateria" as bat
+}
+
+ctrl --> rec : ordena limpieza
+ctrl --> bat : consume energia
+@enduml
+```
+
+### Paso 2 — puertos
+
+**Añade:** los **puertos** `port "nombre"` en el borde y los conectores `-- [puerto]` que llegan exactamente a ellos.
+
+```plantuml
+@startuml
+component "Robot LimpiaPisos" as robot {
+  port "on/off" as pwr
+  port "carga" as chg
+  component "Controlador" as ctrl
+  component "Bateria" as bat
+}
+
+component "Enchufe" as enchufe
+component "Mano Humana" as mano
+
+enchufe -- [pwr]
+mano -- [chg]
+pwr --> bat : alimenta
+chg --> bat : recarga
+@enduml
+```
+
+### Paso 3 — notación completa (delegación y notas)
+
+**Añade:** conector que **delega** del puerto a la parte interna que lo atiende, ensamblaje entre partes y nota con la regla de multiplicidad.
+
+```plantuml
+@startuml
+component "Robot LimpiaPisos" as robot {
+  port "electricidad" as p1
+  port "succcion" as p2
+  component "Controlador" as ctrl
+  component "Motor" as motor
+}
+
+component "Red Electrica" as red
+component "Tuberia de Escape" as tub
+
+red -- [p1]
+p1 --> ctrl : delega hacia dentro
+ctrl --> motor : orden de movimiento
+motor -- p2
+p2 -- tub : delega hacia fuera
+
+note right of robot
+  Si una parte se repite, se escribe
+  con multiplicidad:  rueda[4].
+  Los puertos marcan el contrato
+  visible del componente.
+end note
+@enduml
+```
+
+**Cómo se lee el Paso 3:** todo lo que cruza el borde del robot pasa por un **puerto**; `p1 --> ctrl` es **delegación** (el puerto de fuera confía en la parte interna) y `ctrl --> motor` es un conector **interno**. La nota recuerda que las partes llevan multiplicidad (`rueda[4]`).
+
 ## Errores comunes
 
 - Dibujar **todo el sistema** dentro de un solo componente: la estructura compuesta muestra **un** componente con sus partes, no el mapa completo.

@@ -84,6 +84,82 @@ endif
 
 **Lectura:** *después de recibir el pedido, la bebida y el plato se preparan **en paralelo** (fork); el flujo se sincroniza (join implícito de `end fork`) antes de servir. Las bandas indican quién es responsable de cada actividad.*
 
+## Ejemplo completo — construirlo paso a paso
+
+*Objetivo: documentar el alta de un usuario con **toda la notación de actividades**: inicio/fin, acciones, decisión, bifurcación paralela, carriles, etiquetas de flujo, notas y `detach`.*
+
+### Paso 1 — flujo lineal
+
+**Añade:** nodo inicial `start`, acciones `:...;` y parada `stop` / `[*]`.
+
+```plantuml
+@startuml
+start
+:Rellenar formulario;
+:Enviar solicitud;
+stop
+@enduml
+```
+
+### Paso 2 — decisiones y paralelismo
+
+**Añade:** decisión/fusión `if/else` con su condición y **bifurcación paralela** `fork` que se sincroniza con `end fork`.
+
+```plantuml
+@startuml
+start
+:Rellenar formulario;
+
+if (¿Datos validos?) then (si)
+  fork
+    :Enviar email de bienvenida;
+  fork again
+    :Crear perfil en BD;
+  end fork
+  :Mostrar confirmacion;
+else (no)
+  :Mostrar errores;
+endif
+stop
+@enduml
+```
+
+### Paso 3 — notación completa (carriles, etiquetas de flujo, notas y detach)
+
+**Añade:** **carriles** `|Rol|` (particiones del trabajo), **etiqueta de flujo** sobre la arista `-->[condicion]`, `note` explicativa y `detach` (abandonar el flujo sin terminarlo bien).
+
+```plantuml
+@startuml
+|Usuario|
+start
+:Subir documento;
+
+|Sistema|
+:Validar formato;
+-->[formato incorrecto]
+|Usuario|
+:Corregir archivo;
+detach
+
+|Sistema|
+if (¿Guardado ok?) then (si)
+  |Notificaciones|
+  :Avisar al usuario;
+  note right
+    Las etiquetas del flujo (entre
+    corchetes) son condiciones que
+    se evaluan sobre la arista.
+  end note
+  stop
+else (no)
+  :Reintentar guardado;
+  stop
+endif
+@enduml
+```
+
+**Cómo se lee el Paso 3:** los carriles dicen **quién hace qué**, la arista etiquetada `[formato incorrecto]` indica por dónde salió el flujo cuando falló la validación, y `detach` corta ese camino (el usuario se fue sin completar nada).
+
 ## Errores comunes
 
 - Dejar **ramas abiertas**: cada `if` necesita `endif`, cada `fork` necesita `end fork`.

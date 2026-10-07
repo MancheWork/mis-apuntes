@@ -73,6 +73,86 @@ decidir --> Desconectado : reintentos agotados
 
 **Lectura:** *`Conectado` es un estado compuesto con 3 subestados; tras una falla hay una **elección**: si quedan reintentos vuelve a conectarse, si no corta la sesión.*
 
+## Ejemplo completo — construirlo paso a paso
+
+*Objetivo: modelar la conexión de un dispositivo con **toda la notación de estados**: inicial/final, eventos con guardia y acción, estados compuestos, `entry`/`exit`/`do`, elección `<<choice>>`, historia `<<history>>` y nota.*
+
+### Paso 1 — estados y transiciones básicas
+
+**Añade:** nodo inicial `[*]`, estados y transición con **evento** y **acción** (`evento / acción`).
+
+```plantuml
+@startuml
+[*] --> Desconectado
+Desconectado --> Conectando : conectar()
+Conectando --> Conectado : handshake OK
+Conectado --> Desconectado : desconectar()
+@enduml
+```
+
+### Paso 2 — guardias y estado compuesto
+
+**Añade:** **guardia** `[condicion]` entre corchetes y **estado compuesto** con sus subestados internos.
+
+```plantuml
+@startuml
+[*] --> Desconectado
+
+state "Conectado" as conectado {
+  [*] --> Inactivo
+  Inactivo --> Activo : movimiento
+  Activo --> Inactivo : 5 min inactivo
+}
+
+Desconectado --> conectado : conectar()
+conectado --> Desconectado : desconectar()
+conectado --> conectado : perdida de senal [reintentos < 3] / reconectar
+@enduml
+```
+
+### Paso 3 — notación completa (actividades internas, elección e historia)
+
+**Añade:** actividades `entry`/`exit`/`do` dentro del estado, pseudostados `<<choice>>` y `<<history>>`, nodo final `[*]` interno y nota.
+
+```plantuml
+@startuml
+[*] --> Apagado
+
+state "Apagado" as off
+state "Encendido" as on {
+  state "Espera" as espera {
+    espera : entry / ponerEnModoBajo
+    espera : do / escucharBoton
+    espera : exit / cancelarTimer
+  }
+  state "Trabajando" as trab
+  espera --> trab : boton / iniciar
+  trab --> espera : pausa
+}
+
+state "Decidir" as ch <<choice>>
+state "UltimoEstado" as h <<history>>
+
+off --> on : power / arrancar
+on --> off : power / apagar
+
+on --> ch : fallo de red
+ch --> on : quedan intentos
+ch --> off : sin intentos
+on --> h : reconectar
+h --> espera : recuperar
+
+note right of ch
+  El <<choice>> reparte el flujo
+  segun las guardias; el
+  <<history>> vuelve al ultimo
+  subestado activo.
+end note
+@enduml
+```
+
+**Cómo se lee el Paso 3:** `Espera` ejecuta `do` mientras está activo, dispara `entry`/`exit` al entrar y salir; tras un fallo, `<<choice>>` reparte con guardias y `<<history>>` devuelve al último subestado sin repetir todo el camino.
+
 ## Errores comunes
 
 - Poner **acciones del sistema** como estados (*"Esperando respuesta del usuario"* suele ser un estado; *"Mostrar ventana"* es una acción): los estados describen **situaciones**, no pantallas.

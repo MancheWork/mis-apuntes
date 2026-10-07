@@ -90,6 +90,80 @@ sensor@2100 -> central@2300 : demora de análisis
 
 **Lectura:** *el sensor detecta a los 2000; la central tarda 300 ms en evaluar y alarmar; la sirena suena 2700 ms y todo vuelve al reposo a los 5000.*
 
+## Ejemplo completo — construirlo paso a paso
+
+*Objetivo: documentar la latencia de un sensor con **toda la notación de tiempo**: participantes `concise` y `robust`, marcas de tiempo, estados `is`, flechas entre participantes y ventana `highlight`.*
+
+### Paso 1 — un participante concise con marcas
+
+**Añade:** `concise` (un solo estado visible), marcas `@tiempo` y cambio de estado `X is Estado`.
+
+```plantuml
+@startuml
+concise "Sensor" as s
+
+@0
+s is Monitoreando
+@100
+s is Detectando
+@250
+s is Monitoreando
+@enduml
+```
+
+### Paso 2 — un participante robust y la flecha entre ambos
+
+**Añade:** `robust` (varios estados visibles en paralelo) y la **flecha de relación** `A@t1 -> B@t2 : etiqueta`.
+
+```plantuml
+@startuml
+concise "Sensor" as s
+robust "Central" as c
+
+@0
+s is Monitoreando
+c is Armada
+@100
+s is Detectando
+@130
+c is Evaluando
+@200
+c is Alarmada
+s is Monitoreando
+
+s@130 -> c@200 : 70 ms de reaccion
+@enduml
+```
+
+### Paso 3 — notación completa (ventana highlight y ejes de tiempo)
+
+**Añade:** ventana **`highlight desde hasta`** para remarcar un periodo crítico, ambos tipos de participante juntos y flecha etiquetada entre puntos concretos del tiempo.
+
+```plantuml
+@startuml
+robust "Servidor Web" as web
+concise "BD" as db
+
+@0
+web is Libre
+db is Libre
+highlight 150 to 300
+@150
+web is Cargando
+@190
+db is Consultando
+@250
+db is Libre
+@300
+web is Libre
+
+web@190 -> db@250 : consulta (60 ms)
+db@250 -> web@300 : resultado (50 ms)
+@enduml
+```
+
+**Cómo se lee el Paso 3:** la banda `highlight 150 a 300` es la **ventana crítica** de tiempo; dentro de ella, las flechas `web@190 -> db@250` miden duraciones concretas entre instantes de participantes distintos.
+
 ## Errores comunes
 
 - Usar tiempos **sin unidades definidas**: aclara en una nota si `@100` es ms, µs o ciclos de reloj.

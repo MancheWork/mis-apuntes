@@ -120,6 +120,100 @@ Moto ..|> Electrico
 
 **Lectura:** *`Vehiculo` es abstracta (no se instancia); `Auto` y `Moto` heredan de ella **e implementan** la interfaz `Electrico` (rombo punteado).*
 
+## Ejemplo completo — construirlo paso a paso
+
+*Objetivo: modelar una biblioteca usando **toda la notación de diagrama de clases**: clases con interior, clasificadores (interfaz, abstracto, enumeración) y todas las relaciones.*
+
+### Paso 1 — las clases con su interior
+
+**Añade:** el cajón `class`, la **visibilidad** (`-` privado, `+` público) y los miembros con tipo.
+
+```plantuml
+@startuml
+class Libro {
+  - isbn: String
+  - titulo: String
+  + prestarse(): void
+  + devolverse(): void
+}
+class Socio {
+  - dni: String
+  + nombreCompleto(): String
+}
+@enduml
+```
+
+### Paso 2 — clasificadores
+
+**Añade:** `abstract class` con método `{abstract}`, `interface`, `enum` y el modificador `{static}`.
+
+```plantuml
+@startuml
+abstract class Persona {
+  {abstract} + describir(): String
+  + nombre: String
+}
+interface Prestable {
+  + estaDisponible(): boolean
+}
+enum EstadoLibro {
+  DISPONIBLE
+  PRESTADO
+}
+class Biblioteca {
+  {static} - contador: int
+  + nombre: String
+}
+@enduml
+```
+
+### Paso 3 — todas las relaciones (notación completa)
+
+**Añade:** agregación `o--`, composición `*--`, herencia `--|>`, realización `..|>`, dependencia `..>`, multiplicidades `"1"/"*"`, sentido de lectura `-->`, notas y nota sobre un enlace.
+
+```plantuml
+@startuml
+skinparam classAttributeIconSize 0
+
+class Biblioteca {
+  + nombre: String
+}
+class Libro {
+  + isbn: String
+}
+class Ebook {
+  + url: String
+}
+abstract class Persona {
+  + dni: String
+}
+class Socio {
+  + sanciones: int
+}
+class Ejemplar {
+  + codigo: String
+}
+interface Prestable {
+  + estaDisponible(): boolean
+}
+class Prestamo {
+  + fecha: Date
+}
+
+Biblioteca "1" o-- "*" Ejemplar : contiene
+Ejemplar "*" -- "1" Libro : es copia de
+Ebook --|> Libro
+Socio --|> Persona
+Ejemplar ..|> Prestable
+Socio "1" --> "*" Prestamo : realiza
+Prestamo "*" --> "1" Ejemplar : trata sobre
+Prestamo ..> Libro : referencia
+note on link : solo consulta el ISBN
+@enduml
+```
+
+**Cómo se lee el Paso 3:** el rombo hueco de `contiene` dice "la biblioteca agrega ejemplares, pero cada ejemplar tiene vida propia"; si fuera `*--` (rombo relleno) sería composición: sin biblioteca, el ejemplar dejaría de existir.
+
 ## Errores comunes
 
 - Poner `*` en **ambos** extremos de una asociación sin explicación: define bien cuántos hay de cada lado.

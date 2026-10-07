@@ -70,6 +70,86 @@ mail ..|> Notificador
 
 **Lectura:** *la pasarela usa criptografía para tratar los datos de tarjeta (interfaz compartida), publica eventos de pago, llama a un servicio externo por HTTPS y notifica por email a través de la interfaz `Notificador`.*
 
+## Ejemplo completo — construirlo paso a paso
+
+*Objetivo: modelar una tienda online con **toda la notación de componentes**: interfaces (bola/zócalo), dependencias, realizaciones, estereotipos, anidación y notas.*
+
+### Paso 1 — componentes e interfaces
+
+**Añade:** `component` y las `interface` conectadas con `--` (PlantUML dibuja la bola y el zócalo).
+
+```plantuml
+@startuml
+component "Frontend Web" as front
+component "API Tienda" as api
+component "Base de Datos" as db
+
+interface "HTTPS" as https
+interface "SQL" as sql
+
+front -- https
+https -- api
+api -- sql
+sql -- db
+@enduml
+```
+
+### Paso 2 — dependencias y realizaciones
+
+**Añade:** dependencia `..>` (usa), realización `..|>` (implementa) y estereotipo `<<...>>` para tipificar el componente.
+
+```plantuml
+@startuml
+component "Frontend Web" as front <<aplicacion>>
+component "API Tienda" as api <<servicio>>
+component "Motor de Precios" as motor
+component "Base de Datos" as db <<almacen>>
+
+interface "HTTPS" as https
+interface "Precios" as iprecios
+
+front --> api : HTTPS
+api ..> iprecios
+iprecios ..|> motor
+api --> db : SQL
+@enduml
+```
+
+### Paso 3 — notación completa (anidación y notas)
+
+**Añade:** componentes **dentro** de otros (composición de componentes), interfaces internas con `{}`, nota sobre un componente y paquete agrupador.
+
+```plantuml
+@startuml
+skinparam componentStyle rectangle
+
+package "Sistema de Ventas" {
+  component "Tienda Online" as tienda {
+    interface "Catalogo" as cat
+    interface "Carrito" as car
+    component "Buscador" as buscador
+    component "Checkout" as checkout
+  }
+
+  component "Pasarela de Pagos" as pasarela <<externo>>
+  component "Servidor Correo" as correo <<externo>>
+
+  tienda ..> pasarela : cobra por HTTPS
+  tienda ..> correo : notifica
+  note right of pasarela
+    Proveedor externo:
+    no lo controlamos,
+    solo su contrato.
+  end note
+}
+
+buscador -- cat
+checkout -- car
+@enduml
+```
+
+**Cómo se lee el Paso 3:** `Tienda Online` es un componente que **contiene** interfaces y subcomponentes; fuera, depende de dos proveedores externos con `..>` y la nota documenta que solo conocemos su contrato (la interfaz).
+
 ## Errores comunes
 
 - Dibujar **clases** en vez de componentes: si el rectángulo tiene atributos/métodos en 3 cajones, es una clase.

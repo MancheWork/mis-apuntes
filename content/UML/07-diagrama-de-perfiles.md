@@ -87,6 +87,86 @@ end note
 
 **Lectura:** *estereotipos `<<servicio>>` y `<<dto>>` con etiquetas (`verb`, `ruta`) y una regla documentada: así un equipo entiende de un vistazo qué es cada clase del modelo.*
 
+## Ejemplo completo — construirlo paso a paso
+
+*Objetivo: extender UML para modelar una base de datos con **toda la notación de perfiles**: estereotipos aplicados, paquete-perfil, clases estereotipadas y restricciones.*
+
+### Paso 1 — estereotipos aplicados
+
+**Añade:** el estereotipo `<<...>>` sobre clases y elementos comunes.
+
+```plantuml
+@startuml
+class Usuario <<persistente>> {
+  + id: long
+}
+class Sesion <<transitorio>> {
+  + token: String
+}
+@enduml
+```
+
+### Paso 2 — el paquete-perfil y sus estereotipos
+
+**Añade:** el paquete que agrupa el perfil con su estereotipo `<<profile>>` y las definiciones de estereotipo como clases especiales.
+
+```plantuml
+@startuml
+package "Persistencia" <<profile>> {
+  class "«estereotipo» Persistente" as pers {
+    + tabla: String
+    + esquema: String
+  }
+  class "«estereotipo» DAO" as dao {
+    + consultaSQL: String
+  }
+}
+@enduml
+```
+
+### Paso 3 — notación completa (perfil aplicado al modelo)
+
+**Añade:** combinación: clases de dominio **aplicando** los estereotipos del perfil, atributos que extienden al estereotipo (valores), nota con la regla del perfil y paquete de dominio.
+
+```plantuml
+@startuml
+skinparam classAttributeIconSize 0
+
+package "Perfil: Persistencia" <<profile>> {
+  class "Persistente" <<estereotipo>> {
+    + tabla: String
+  }
+  class "DAO" <<estereotipo>> {
+    + entidad: String
+  }
+}
+
+package "Modelo de la app" {
+  class Articulo <<persistente>> {
+    + tabla = "articulos"
+    + id: long
+    + titulo: String
+  }
+  class ArticuloDAO <<dao>> {
+    + entidad = "Articulo"
+    + buscarPorISBN(): Articulo
+  }
+  class Carrito {
+    + total: double
+  }
+}
+
+ArticuloDAO ..> Articulo : administra
+note bottom of Articulo
+  El estereotipo <<persistente>>
+  añade el atributo derivado
+  'tabla' que la clase base no tiene.
+end note
+@enduml
+```
+
+**Cómo se lee el Paso 3:** el perfil (arriba) **no cambia UML**, solo lo decora: las clases de abajo aplican `<<persistente>>` y `<<dao>>`, y gracias a eso pueden mostrar atributos extra (`tabla = "articulos"`) que provienen del estereotipo, no de la clase.
+
 ## Errores comunes
 
 - Inventar estereotipos **sin definirlos antes** en el perfil: si no está en el perfil, no existe para UML.

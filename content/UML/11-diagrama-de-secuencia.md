@@ -90,6 +90,97 @@ car --> c : mostrar confirmación
 
 **Lectura:** *el Carrito orquesta la operación: cobra al Servicio de Pagos, registra una nota con el id y pide el comprobante al servidor de correo antes de responder al Cliente.*
 
+## Ejemplo completo — construirlo paso a paso
+
+*Objetivo: detallar la reserva de una mesa con **toda la notación de secuencia**: tipos de participante, mensajes síncrono/asíncrono/retorno, `activate`, mensajes a sí mismo, `create`/`destroy`, fragmentos, divisores, `box`, notas y numeración automática.*
+
+### Paso 1 — participantes y mensajes
+
+**Añade:** `autonumber`, participantes con tipo (`actor`, `participant`, `database`) y mensaje con retorno `-->`.
+
+```plantuml
+@startuml
+autonumber
+
+actor "Cliente" as cli
+participant "Mozo" as mozo
+database "Reservas" as db
+
+cli -> mozo : reservar mesa 4
+mozo -> db : buscarDisponibilidad()
+db --> mozo : libre
+mozo --> cli : confirmada
+@enduml
+```
+
+### Paso 2 — activación, asíncronos y mensajes a sí mismo
+
+**Añade:** `activate`/`deactivate`, mensaje **asíncrono** `->>` (no espera) y **automensaje** (la flecha que sale y regresa al mismo participante).
+
+```plantuml
+@startuml
+autonumber
+
+actor "Cliente" as cli
+participant "App" as app
+participant "Servicio Notificaciones" as noti
+database "Reservas" as db
+
+cli -> app : reservar mesa 4
+activate app
+app -> db : guardar()
+db --> app : OK
+
+app ->> noti : enviarConfirmacion()   (asincrono: no espera)
+app --> cli : reserva confirmada
+deactivate app
+
+app -> app : limpiarCache()
+@enduml
+```
+
+### Paso 3 — notación completa (fragmentos, creación/destrucción y estructura)
+
+**Añade:** fragmento `alt/else`, nota sobre mensaje, `create`/`destroy` de participantes, separador de fases `== ... ==`, `box` de agrupación y nota lateral.
+
+```plantuml
+@startuml
+autonumber
+
+actor "Cliente" as cli
+box "Frontend" #EFEFEF
+  participant "App" as app
+  participant "Pagina Web" as web
+end box
+participant "Servicio Mesa" as srv
+database "Base de Datos" as db
+
+cli -> web : elegir horario
+web -> app : solicitar()
+alt horario disponible
+  create srv
+  app -> srv : reservar(horario)
+  activate srv
+  srv -> db : INSERT reserva
+  db --> srv : OK
+  srv --> app : confirmada
+  deactivate srv
+  note right of srv
+    El return puede ir debajo
+    con responseMessageBelowArrow.
+  end note
+else horario ocupado
+  app --> cli : proponer alternativa
+end
+
+== Cierre ==
+app -> app : guardar en local
+destroy srv
+@enduml
+```
+
+**Cómo se lee el Paso 3:** el `box` agrupa los participantes del frontend, `create`/`destroy` marcan cuándo nace y muere el Servicio Mesa, el fragmento `alt` cubre los dos escenarios y el separador `== Cierre ==` divide las fases de tiempo.
+
 ## Errores comunes
 
 - Flechas **hacia atrás en el tiempo** (un mensaje que retorna antes de haber ido): el eje vertical es el tiempo.

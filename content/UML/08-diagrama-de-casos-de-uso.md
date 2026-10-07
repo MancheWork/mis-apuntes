@@ -97,6 +97,113 @@ prestar ..> multa : <<extend>>
 
 **Lectura:** *el Invitado solo busca; el Socio puede todo; reservar solo termina en préstamo si hay disponibilidad (extend) y la multa aparece únicamente si hay retraso.*
 
+## Ejemplo completo — construirlo paso a paso
+
+*Objetivo: modelar la biblioteca con **toda la notación de casos de uso**: frontera, actores con generalización, casos base, `<<include>>`, `<<extend>>`, generalización de casos, paquetes y notas.*
+
+### Paso 1 — actores y casos básicos
+
+**Añade:** actores, frontera `rectangle` del sistema y casos de uso enlazados con participación.
+
+```plantuml
+@startuml
+left to right direction
+
+actor "Socio" as socio
+actor "Bibliotecario" as bib
+
+rectangle "Sistema de Biblioteca" {
+  usecase "Buscar libro" as buscar
+  usecase "Prestar libro" as prestar
+  usecase "Devolver libro" as devolver
+}
+
+socio --> buscar
+bib --> prestar
+bib --> devolver
+@enduml
+```
+
+### Paso 2 — include, extend y generalización de actores
+
+**Añade:** `<<include>>` (obligatorio), `<<extend>>` (opcional con condición) y la **generalización de actores** `--|>`.
+
+```plantuml
+@startuml
+left to right direction
+
+actor "Persona" as persona
+actor "Socio" as socio
+actor "Bibliotecario" as bib
+
+rectangle "Sistema" {
+  usecase "Buscar libro" as buscar
+  usecase "Prestar libro" as prestar
+  usecase "Verificar sanciones" as verificar
+  usecase "Reservar libro" as reservar
+}
+
+socio --|> persona
+bib --|> persona
+
+socio --> buscar
+socio --> reservar
+bib --> prestar
+
+prestar ..> verificar : <<include>>
+reservar ..> buscar : <<extend>>
+@enduml
+```
+
+### Paso 3 — notación completa (paquetes, generalización de casos y notas)
+
+**Añade:** casos agrupados en **paquetes**, **generalización entre casos de uso** (triángulo `--|>`) y notas con las reglas de negocio.
+
+```plantuml
+@startuml
+left to right direction
+
+actor "Socio" as socio
+actor "Bibliotecario" as bib
+
+rectangle "Sistema de Biblioteca" {
+  package "Prestamos" {
+    usecase "Gestionar prestamo" as gest
+    usecase "Prestar libro" as prestar
+    usecase "Devolver libro" as devolver
+    usecase "Verificar sanciones" as verificar
+    usecase "Multa por retraso" as multa
+  }
+  package "Gestion" {
+    usecase "Alta de socio" as alta
+    usecase "Gestionar inventario" as inv
+  }
+}
+
+socio --> gest
+socio --> devolver
+bib --> prestar
+bib --> alta
+bib --> inv
+
+prestar --|> gest
+devolver --|> gest
+prestar ..> verificar : <<include>>
+devolver ..> multa : <<extend>>
+
+note right of multa
+  El <<extend>> ocurre SOLO si
+  la devolucion llega tarde.
+end note
+note left of verificar
+  Regla: maximo 3 libros activos
+  y ninguna sancion activa.
+end note
+@enduml
+```
+
+**Cómo se lee el Paso 3:** `Prestar` y `Devolver` **son casos especializados** de `Gestionar prestamo` (triángulo `--|>`), los `<<include>>`/`<<extend>>` llevan su etiqueta con la condición escrita en la nota y los casos están agrupados en paquetes temáticos.
+
 ## Errores comunes
 
 - Poner **pantallas o botones** como casos de uso (*"Hacer clic en Aceptar"*): el caso de uso es la **intención del usuario**, no la interfaz.

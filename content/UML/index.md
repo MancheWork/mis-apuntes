@@ -11,6 +11,7 @@ En esta carpeta encontrarás los **14 diagramas oficiales de UML 2**, cada uno c
 
 - Explicación didáctica de **qué es, cuándo se usa y cómo se lee**.
 - **2 ejemplos completos** en formato **PlantUML** (código que genera el diagrama).
+- Un **ejemplo completo paso a paso** que construye un caso real añadiendo **toda la notación** del diagrama en 3 pasos.
 - Los errores más comunes al dibujarlo.
 
 > [!tip] Empieza por aquí

@@ -86,6 +86,81 @@ admin ..> comun : registra
 
 **Lectura:** *`SistemaUniversitario` contiene tres subpaquetes; `Academico` consulta datos de `Administracion` y ambos usan elementos `Comun`.*
 
+## Ejemplo completo — construirlo paso a paso
+
+*Objetivo: organizar una tienda en paquetes usando **toda la notación**: paquetes anidados, estereotipos, dependencias etiquetadas y notas.*
+
+### Paso 1 — paquetes con clases
+
+**Añade:** el paquete `package "Nombre"` y su contenido.
+
+```plantuml
+@startuml
+package "Tienda" {
+  class Producto
+  class Pedido
+}
+@enduml
+```
+
+### Paso 2 — anidación y estereotipos
+
+**Añade:** paquetes **dentro** de paquetes (módulos) y el estereotipo `<<...>>` para clasificar el paquete.
+
+```plantuml
+@startuml
+package "Tienda" {
+  package "Dominio" <<core>> {
+    class Producto
+    class Pedido
+    class LineaPedido
+  }
+  package "Infra" <<detalles>> {
+    class RepositorioSQL
+    class PasarelaPagos
+  }
+}
+@enduml
+```
+
+### Paso 3 — notación completa (dependencias entre paquetes)
+
+**Añade:** dependencias **entre paquetes** `..>` con etiqueta de tipo (`<<import>>`, `<<acceso>>`), clase pública vs. privada y nota de regla de dependencia.
+
+```plantuml
+@startuml
+skinparam packageStyle rectangle
+
+package "Presentacion" <<capa>> {
+  class ControladorPedido
+}
+package "Dominio" <<capa>> {
+  class Pedido {
+    + total(): double
+  }
+  class LineaPedido
+  package "Extras" {
+    class Descuento
+  }
+}
+package "Infraestructura" <<capa>> {
+  class RepositorioPedido
+}
+
+Presentacion ..> Dominio : <<import>>
+Dominio ..> Infraestructura : <<acceso>>
+ControladorPedido ..> Pedido
+RepositorioPedido ..> Pedido : persiste
+note bottom of Dominio
+  Regla: las dependencias apuntan
+  hacia DENTRO. Dominio no conoce
+  a las capas que lo usan.
+end note
+@enduml
+```
+
+**Cómo se lee el Paso 3:** tres paquetes-capa con estereotipo `<<capa>>`, dependencias etiquetadas (`<<import>>` = usa las clases públicas; `<<acceso>>` = accede a su interior) y la nota recuerda el sentido correcto de las flechas.
+
 ## Errores comunes
 
 - **Dependencias circulares** entre paquetes: si A depende de B y B de A, extrae una interfaz o una tercera capa `Comun`.
