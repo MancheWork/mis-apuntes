@@ -29,6 +29,7 @@ if (-not (Get-Command java -ErrorAction SilentlyContinue)) {
 }
 
 $fencePattern = [regex]'(?ms)^```plantuml[ \t]*\r?\n(.*?)^```[ \t]*\r?$'
+$contentRoot = (Resolve-Path -LiteralPath $ContentDir).Path
 $mdFiles = Get-ChildItem -LiteralPath $ContentDir -Recurse -Filter *.md -File
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 
@@ -78,7 +79,9 @@ foreach ($md in $mdFiles) {
 
         $rendered++
         if ($Rewrite) {
-            $img = "![$($md.BaseName) - diagrama $index](assets/$base.svg)`n`n"
+            $dirRel = $md.DirectoryName.Substring($contentRoot.Length).TrimStart('\', '/') -replace '\\', '/'
+            $imgRel = if ($dirRel) { "$dirRel/assets/$base.svg" } else { "assets/$base.svg" }
+            $img = "![$($md.BaseName) - diagrama $index]($imgRel)`n`n"
             $replacements += [pscustomobject]@{ Start = $m.Index; Length = $m.Length; Text = $img + $m.Value }
         }
     }
