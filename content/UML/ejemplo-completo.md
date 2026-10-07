@@ -183,7 +183,7 @@ b --> s : entregar libro + fecha limite
 2. **Subraya sustantivos** → clases/casos de uso; **verbos** → métodos/mensajes.
 3. **Subraya cantidades** ("muchos", "uno por cada") → multiplicidades.
 4. Elige el diagrama según la pregunta: *¿qué existe?* → clases; *¿qué hace el usuario?* → casos de uso; *¿en qué orden?* → secuencia.
-5. Copia un ejemplo de esta bóveda, pégalo en el [PlantUML Online Server](https://www.plantuml.com/plantuml/uml) y **rompélo**: cambiar un `--\|>` por `..>` y ver qué pasa es la mejor forma de aprender.
-6. En Obsidian solo guardas el código; la imagen la genera la web automáticamente.
+5. Copia un ejemplo de este cuaderno, pégalo en el [PlantUML Online Server](https://www.plantuml.com/plantuml/uml) y **rompélo**: cambiar un `--\|>` por `..>` y ver qué pasa es la mejor forma de aprender.
+6. No hace falta instalar nada: guarda solo el código y la imagen la genera la web automáticamente.
 
 Siguiente: estudia los [[01-diagrama-de-clases|14 diagramas oficiales]] con sus 28 ejemplos.

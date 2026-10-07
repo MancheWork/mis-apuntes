@@ -2,47 +2,23 @@
 title: Bienvenido
 ---
 
-# Bienvenido a mis apuntes
+# Bienvenido
 
-## Objetivo de esta bóveda
+Este es un **cuaderno de ingeniería** público: apuntes y ejemplos que escribo para entender mejor y que mantengo en una web legible desde cualquier dispositivo.
 
-El objetivo es sencillo: **tener apuntes, ejemplos y material de aprendizaje en un solo lugar**, siempre accesible desde cualquier navegador.
+## Qué vas a encontrar
 
-- **Apuntes**: lo que curso, estudio o investigo, explicado con mis palabras.
-- **Ejemplos**: fragmentos de código y diagramas listos para copiar y probar (por ejemplo, los 28 diagramas de [[UML/index|UML]]).
-- **Aprendizaje**: cada nota debe poder leerse dentro de un año sin contexto extra: explica el *por qué*, no solo el *qué*.
-
-Todo lo que escribo en Obsidian se publica solo en la web. Si está aquí, es porque me es útil; si no me es útil, no vive en la bóveda.
-
-## Reglas de la bóveda
-
-1. **Una carpeta por materia o tema** (`UML/`, `Matemáticas/`...). Nada suelto en la raíz salvo las notas generales.
-2. **Nombres en minúsculas con guiones** y, si la materia se estudia en orden, número delante: `11-diagrama-de-secuencia.md`.
-3. **Toda nota empieza con frontmatter**: `title` (título legible) y `tags` (etiquetas de filtro, p. ej. `uml`).
-4. **Enlaza con `[[wikilinks]]`** en lugar de copiar texto: los apuntes deben ser una red, no una pila de archivos.
-5. **Todo ejemplo va en un bloque con lenguaje** (```` ```plantuml ````, ```` ```python ````...): así se resalta y, si es PlantUML, se dibuja solo.
-6. **Los diagramas UML se escriben en bloques `plantuml`**: la web los convierte en imagen automáticamente; el código queda plegado debajo para consultarlo.
-7. **Las matemáticas se escriben con LaTeX** (`$...$`, `$$...$$`): se renderizan en la web.
-8. **Sube automático cada 5 minutos** (plugin Obsidian Git). Tras escribir, espera al push y revisa el resultado en la web.
-9. **La carpeta `private/` nunca se publica**: ahí va lo que no debe salir.
-10. **Regla de revisión**: si no entiendo mi propia nota al releerla, la reescribo hoy, no mañana.
-
-## Cómo funciona la publicación
-
-```
-Obsidian (escribes)
-   │  Obsidian Git: commit + push cada 5 min
-   ▼
-GitHub (MancheWork/mis-apuntes)
-   │  GitHub Actions: renderiza PlantUML → compila Quartz
-   ▼
-Web pública (manchework.github.io/mis-apuntes)
-```
-
-Si algo no aparece en la web: mira la pestaña *Actions* del repo; si la ejecución está en verde, es cosa de caché del navegador (Ctrl+F5).
+- **[[UML/index|Diagramas UML]]**: los 14 diagramas oficiales de UML 2, cada uno con una explicación didáctica de *qué es, cuándo se usa y cómo se lee*, **2 ejemplos completos** en PlantUML y un **ejemplo construido paso a paso** que recorre toda la notación.
+- **Ejemplos listos para copiar**: todo bloque de código se puede pegar y probar tal cual.
+- **Matemáticas y código renderizados**: LaTeX se dibuja en la página y los fragmentos de código se resaltan.
 
 ## Por dónde empezar
 
-- [[index|Mis apuntes]] — portada e índice general.
-- [[UML/index|Diagramas UML]] — los 14 diagramas con explicación y ejemplos.
-- [[UML/ejemplo-completo|Ejemplo completo]] — cómo armar un modelo UML paso a paso.
+1. **Si es tu primera vez con UML**, ve a [[UML/ejemplo-completo|Ejemplo completo]]: un sistema de biblioteca armado paso a paso, con la notación explicada símbolo a símbolo.
+2. **Consulta los diagramas** por orden de estudio en [[UML/index|el índice de UML]].
+3. **Índice general** del cuaderno en la [[index|portada]].
+
+## Cómo leer los diagramas
+
+- Ves la **imagen** del diagrama; debajo, plegado bajo el botón *"Ver codigo PlantUML"*, queda el código que lo genera — despliégalo cuando quieras copiarlo o modificarlo.
+- Las notas se enlazan entre sí: léelas como una red, no como fichas sueltas.

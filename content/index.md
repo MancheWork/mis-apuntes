@@ -1,17 +1,17 @@
 ---
-title: Mis apuntes
+title: Cuaderno de Ingeniería
 ---
 
-# Mis apuntes
+# Cuaderno de Ingeniería
 
-Bienvenido a mi bóveda de notas publicada automáticamente con **Obsidian + Quartz + GitHub Pages**.
+Notas, ejemplos y material de estudio de ingeniería, publicados en abierto para leerse desde cualquier navegador.
 
-- Escribe tus notas en Obsidian dentro de la carpeta `content/`.
-- El plugin **Obsidian Git** las sube a GitHub cada 5 minutos.
-- GitHub Actions compila el sitio y lo publica aquí.
+- **Explicado con calma**: cada nota se entiende sin contexto previo: el *por qué*, no solo el *qué*.
+- **Ejemplos listos para copiar**: bloques de código y diagramas que se prueban tal cual.
+- **Diagramas dibujados solos**: el código PlantUML se convierte en imagen al publicar; el fuente queda plegado para consultarlo.
 
 ## Índice
 
-- [[Bienvenido]] — objetivo, reglas de la bóveda y cómo se publica.
-- [[UML/index|Diagramas UML]] — 14 diagramas con 28 ejemplos PlantUML.
-- [[UML/ejemplo-completo|Ejemplo completo]] — armar un modelo paso a paso.
+- [[Bienvenido]] — qué es este cuaderno y por dónde empezar.
+- [[UML/index|Diagramas UML]] — los 14 diagramas oficiales, con explicación, ejemplos y un ejercicio completo paso a paso.
+- [[UML/ejemplo-completo|Ejemplo completo]] — un modelo UML armado de la A a la Z.
