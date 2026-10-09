@@ -15,13 +15,19 @@ En esta sección encontrarás los **4 programas didácticos de la Clase 8** (cre
 > [!info] Lo que necesitas
 > Solo `using System;` y `using System.IO;`. Los ejemplos usan consola (.NET Framework 4.7.2) y se pegan tal cual en un proyecto de tipo *Aplicación de consola*.
 
+## Base C# (empieza aquí si vienes de cero)
+
+| # | Nota | Responde a... |
+| --- | --- | --- |
+| 00 | [[00-fundamentos-csharp\|Fundamentos C#]] | ¿Qué son `int/double/string`, `if/else`, `for`, menú y matrices? |
+
 ## Repaso POO (base para guardar objetos)
 
 Sin clases no hay nada que guardar: primero el molde, después el archivo.
 
 | # | Nota | Responde a... |
 | --- | --- | --- |
-| 00 | [[01-poo-repaso\|Repaso POO]] | ¿Cómo modelo un `Estudiante` con atributos y métodos? |
+| 01 | [[01-poo-repaso\|Repaso POO]] | ¿Cómo modelo un `Estudiante` con atributos, parámetros y manejo memoria/archivo? |
 
 ## Operaciones con archivos (4 programas de clase)
 
@@ -36,6 +42,6 @@ Cada programa hace **una sola operación** sobre `datos.txt` con formato `Nombre
 
 ## Consejos para estudiar
 
-1. **Orden de lectura**: POO → Crear → Leer → Buscar → Agregar → [[ejemplo-completo|Ejemplo completo]].
+1. **Orden de lectura**: [[00-fundamentos-csharp|Fundamentos]] → POO → Crear → Leer → Buscar → Agregar → [[ejemplo-completo|Ejemplo completo]].
 2. **Copia y rompe**: cambia `WriteAllText` por `AppendAllText` y mira qué pasa al ejecutar dos veces.
 3. **Ojo con la ruta**: los ejemplos originales usan `C:\Users\scarrasc\...` (el PC del profe). En el ejemplo completo ya viene la versión portable con `MyDocuments`.
