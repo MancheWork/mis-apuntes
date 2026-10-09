@@ -95,28 +95,64 @@ do
 
 ## Matrices con datos ficticios
 
+*Objetivo: entender la matriz como tabla fila x columna, leerla celda por celda y promediar cada fila.*
+
+### Paso 1 — declarar la tabla (qué es)
+
 ```csharp
-// 3 estudiantes x 3 notas (datos inventados para practicar)
+// 3 estudiantes (filas) x 3 notas (columnas). Datos inventados para practicar.
 double[,] notas = {
-    { 6.5, 5.8, 7.0 },
-    { 4.2, 5.0, 5.5 },
-    { 7.0, 6.8, 6.9 }
+    { 6.5, 5.8, 7.0 },   // fila 0 = Paola
+    { 4.2, 5.0, 5.5 },   // fila 1 = Diego
+    { 7.0, 6.8, 6.9 }    // fila 2 = Ana
 };
 
 string[] nombres = { "Paola", "Diego", "Ana" };
+```
 
-for (int f = 0; f < 3; f++)
+**Qué es:** *una matriz es una tabla con 2 índices: `notas[fila, columna]`. La coma en `double[,]` dice "2 dimensiones"; cada fila es un estudiante, cada columna una materia (Historia, Matemática, Lenguaje).*
+**Cómo se dibuja:**
+
+|  | col 0 (Hist.) | col 1 (Mat.) | col 2 (Leng.) |
+| --- | --- | --- | --- |
+| fila 0 Paola | `notas[0,0]` = 6.5 | `notas[0,1]` = 5.8 | `notas[0,2]` = 7.0 |
+| fila 1 Diego | `notas[1,0]` = 4.2 | `notas[1,1]` = 5.0 | `notas[1,2]` = 5.5 |
+| fila 2 Ana | `notas[2,0]` = 7.0 | `notas[2,1]` = 6.8 | `notas[2,2]` = 6.9 |
+
+### Paso 2 — recorrer una fila (cómo se lee una celda)
+
+```csharp
+// Suma SOLO la fila 0 (Paola): el for mueve la columna c de 0 a 2
+double suma = 0;
+for (int c = 0; c < 3; c++)
 {
-    double suma = 0;
-    for (int c = 0; c < 3; c++)
+    suma += notas[0, c];   // c=0 -> 6.5, c=1 -> 6.5+5.8, c=2 -> 6.5+5.8+7.0
+}
+Console.WriteLine("Paola suma: " + suma);          // 19.3
+Console.WriteLine("Paola promedio: " + (suma / 3).ToString("F2"));  // 6.43
+```
+
+**Cómo funciona:** *fijo la fila (`0`) y el `for` pasea la columna (`c`): `notas[0,c]` visita 6.5 → 5.8 → 7.0 y las acumula en `suma`; al salir divido por 3.*
+
+### Paso 3 — recorrer toda la matriz (notación completa)
+
+```csharp
+for (int f = 0; f < 3; f++)        // for EXTERNO: elige la fila (estudiante)
+{
+    double suma = 0;               // se reinicia en cada fila
+    for (int c = 0; c < 3; c++)    // for INTERNO: recorre las 3 columnas (notas)
     {
         suma += notas[f, c];
     }
     Console.WriteLine(nombres[f] + " promedio: " + (suma / 3).ToString("F2"));
 }
+// Salida:
+// Paola promedio: 6.43
+// Diego promedio: 4.90
+// Ana promedio: 6.90
 ```
 
-**Cómo funciona:** *`notas[f, c]` es fila f (estudiante) columna c (materia); el `for` interno suma la fila y el externo cambia de estudiante.*
+**Cómo se lee el Paso 3:** *el `for` de afuera (`f`) dice "¿de qué estudiante hablo?"; el de adentro (`c`) dice "¿qué nota sumo ahora?". Cuando el interno termina (3 notas), se imprime el promedio, `suma` se reinicia a 0 y el externo avanza al siguiente estudiante. Orden de visita: `[0,0] [0,1] [0,2] → [1,0] [1,1] [1,2] → [2,0] [2,1] [2,2]`.*
 **Manejo de datos:** *la matriz vive en memoria (se pierde al cerrar); el archivo la hace permanente: cada fila se vuelve un bloque `Nombre/Edad` en `datos.txt`.*
 
 ## Errores comunes
