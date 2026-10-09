@@ -15,6 +15,28 @@ tags: [csharp, archivos]
 - `File.ReadAllText(ruta + "datos.txt")` → un bloque de texto.
 - `File.ReadAllLines(archivo)` → `string[]` donde `lineas[0]` es la primera línea.
 
+## Diagrama: secuencia de lectura
+
+Muestra el orden temporal: quién le pide a quién, de la consola al disco y de vuelta:
+
+```plantuml
+@startuml
+autonumber
+actor Usuario as u
+participant "Programa" as p
+participant "System.IO.File" as f
+database "datos.txt" as d
+u -> p : ejecutar Leer
+p -> f : ReadAllText(ruta)
+f -> d : abrir y leer bytes
+d --> f : contenido
+f --> p : string con todo el texto
+p --> u : mostrar en consola
+@enduml
+```
+
+**Lectura:** *el tiempo baja: el usuario pide, el programa delega en `File`, el archivo responde y el texto vuelve hasta la consola.*
+
 ## Ejemplo 1: programa de clase (`Archivos_Recuperacion/Program.cs`)
 
 Lee todo el archivo de una vez y lo imprime:

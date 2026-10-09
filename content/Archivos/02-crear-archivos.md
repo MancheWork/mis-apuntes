@@ -16,6 +16,31 @@ tags: [csharp, archivos]
 - `File.WriteAllText(ruta, "Nombre: " + nombre + "\nEdad: " + edad);` → escribe todo de una vez.
 - `Console.ForegroundColor = ConsoleColor.Green;` → solo adorno de consola.
 
+## Diagrama: qué hace `WriteAllText`
+
+Explica el flujo con carriles (quién hace qué) y una decisión (¿existe el archivo?):
+
+```plantuml
+@startuml
+|Usuario|
+start
+:Escribe Nombre y Edad en consola;
+|Programa|
+:Arma el texto "Nombre: ... Edad: ...";
+if (¿Existe datos.txt?) then (sí)
+  :Borra todo el contenido anterior;
+else (no)
+  :Crea el archivo vacío;
+endif
+:Escribe el texto nuevo;
+|Archivo datos.txt|
+:Queda solo el último registro;
+stop
+@enduml
+```
+
+**Lectura:** *el rombo decide: si el archivo existe lo vacía, si no lo crea; en ambos casos termina con un solo registro (sobrescribe).*
+
 ## Ejemplo 1: programa de clase (`Archivos_Creacion/Program.cs`)
 
 Pide nombre y edad y los guarda. Tal cual lo escribió el profe:

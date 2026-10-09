@@ -14,6 +14,26 @@ tags: [csharp, archivos]
 **Cómo se lee:**
 - `File.AppendAllText(archivo, "\nNombre: " + nombre + "\nEdad: " + edad);` → el `\n` inicial separa del registro anterior.
 
+## Diagrama: ciclo de vida de `datos.txt`
+
+Los estados por los que pasa el archivo según qué método lo toca (`Read` no cambia nada, `Write` reinicia, `Append` suma):
+
+```plantuml
+@startuml
+[*] --> NoExiste : inicio
+NoExiste --> Creado : WriteAllText (primer guardado)
+Creado --> Leido : ReadAllText (verificar)
+Leido --> Agregado : AppendAllText (sumar registro)
+Agregado --> Leido : ReadAllText (ver todos)
+Agregado --> Agregado : AppendAllText (otro registro)
+Creado --> Creado : WriteAllText (reiniciar, borra todo)
+Leido --> [*] : cerrar programa
+Agregado --> [*] : cerrar programa
+@enduml
+```
+
+**Lectura:** *`Write` crea o reinicia; `Read` no cambia el estado (solo mira); `Append` suma y se queda en Agregado para seguir creciendo.*
+
 ## Ejemplo 1: programa de clase (`Archivo_Modifica/Program.cs`)
 
 Pide nombre/edad y los pega al final:

@@ -16,6 +16,32 @@ tags: [csharp, archivos]
 - `if (lineas[i] == "Nombre: Paola")` → comparación exacta.
 - `lineas[i + 1]` → la edad (línea siguiente).
 
+## Diagrama: cómo recorre la búsqueda
+
+Un ciclo `while` que avanza línea a línea hasta coincidir o agotar el archivo:
+
+```plantuml
+@startuml
+|Programa|
+start
+:Cargar lineas = ReadAllLines(archivo);
+:i = 0;
+while (¿i < lineas.Length?) is (sí)
+  if (¿lineas[i] es "Nombre: Paola"?) then (sí)
+    :Mostrar lineas[i] (nombre);
+    :Mostrar lineas[i+1] (edad);
+    stop
+  else (no)
+    :i = i + 1;
+  endif
+endwhile (no)
+:Mostrar "no encontrado";
+stop
+@enduml
+```
+
+**Lectura:** *el `while` avanza `i` línea a línea; si coincide muestra el par nombre/edad y corta con `stop`; si el ciclo termina, avisa que no existe.*
+
 ## Ejemplo 1: programa de clase (`Archivo_Buscar/Program.cs`)
 
 Busca fijo a "Paola" y muestra nombre + edad:
