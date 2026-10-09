@@ -15,3 +15,4 @@ Notas, ejemplos y material de estudio de ingeniería, publicados en abierto para
 - [[Bienvenido]] — qué es este cuaderno y por dónde empezar.
 - [[UML/index|Diagramas UML]] — los 14 diagramas oficiales, con explicación, ejemplos y un ejercicio completo paso a paso.
 - [[UML/ejemplo-completo|Ejemplo completo]] — un modelo UML armado de la A a la Z.
+- [[Archivos/index|Archivos en C#]] — crear, leer, buscar y agregar en `datos.txt` con `System.IO`, más repaso POO y ejemplo completo portable.
