@@ -155,6 +155,70 @@ for (int f = 0; f < 3; f++)        // for EXTERNO: elige la fila (estudiante)
 **Cómo se lee el Paso 3:** *el `for` de afuera (`f`) dice "¿de qué estudiante hablo?"; el de adentro (`c`) dice "¿qué nota sumo ahora?". Cuando el interno termina (3 notas), se imprime el promedio, `suma` se reinicia a 0 y el externo avanza al siguiente estudiante. Orden de visita: `[0,0] [0,1] [0,2] → [1,0] [1,1] [1,2] → [2,0] [2,1] [2,2]`.*
 **Manejo de datos:** *la matriz vive en memoria (se pierde al cerrar); el archivo la hace permanente: cada fila se vuelve un bloque `Nombre/Edad` en `datos.txt`.*
 
+## `static`, `namespace` y `args[]`: las palabras que aparecen en todos tus códigos
+
+```csharp
+using System;                  // trae Console, Convert, etc.
+
+namespace SistemaEstudiantes   // APELLIDO del proyecto: agrupa tus clases
+{
+    class Estudiante { /* ... */ }
+
+    class Program
+    {
+        static void Main(string[] args)   // PUERTA de entrada: por aquí parte todo
+        {
+            Console.WriteLine("Hola");
+        }
+    }
+}
+```
+
+**Qué es cada uno:**
+
+| Palabra | Qué es | Para qué sirve | Dónde va |
+| --- | --- | --- | --- |
+| `namespace SistemaEstudiantes` | Caja con apellido | Evita choques: tu `Estudiante` no se confunde con otro `Estudiante` de otra librería | Envuelve todas tus clases del proyecto |
+| `class Program` | Molde del programa | Contiene el punto de partida | Una por proyecto de consola |
+| `static` | "Sin crear objeto" | Permite llamar sin `new`: `Main` parte solo, `File.WriteAllText` se usa directo | En `Main` y en métodos utilitarios como `RutaArchivo()` |
+| `void` | "No devuelve nada" | `Main` y `Mostrar()` solo hacen, no entregan valor | Delante del método que solo ejecuta |
+| `string[] args` | Lista de palabras de arranque | Recibe datos al lanzar el `.exe` desde terminal: `programa.exe Ana 20` → `args[0]="Ana"`, `args[1]="20"` | Entre paréntesis del `Main` |
+
+**Cómo funciona `static` (la duda típica):**
+
+```csharp
+// SIN static: necesitas fabricar el objeto primero
+Estudiante e = new Estudiante("A1", "Paola", 6.5, 5.8, 7.0);
+e.MostrarInformacion();   // objeto.método()
+
+// CON static: lo llamas directo por la clase, sin new
+File.WriteAllText(ruta, texto);   // Clase.Método() — File nunca se crea con new
+int n = int.Parse("20");          // otro ejemplo: int.Parse es static
+```
+
+**Lectura:** *`static` = "pertenece a la clase, no a cada objeto". Por eso `Main` es `static` (el sistema lo llama sin crear `Program`) y `File` es todo `static` (no tiene sentido crear un objeto archivo, solo usar sus herramientas). Tu `Datos.RutaArchivo()` del ejemplo completo también es `static` por lo mismo.*
+
+**Cómo funciona `args[]` con ejemplo:**
+
+```csharp
+static void Main(string[] args)
+{
+    // Lanzar como: Archivos_Creacion.exe Paola 20
+    if (args.Length >= 2)
+    {
+        Console.WriteLine("Hola " + args[0] + ", edad " + args[1]);
+    }
+    else
+    {
+        Console.WriteLine("Sin argumentos: pido por teclado.");
+        Console.Write("Nombre: ");
+        string nombre = Console.ReadLine();
+    }
+}
+```
+
+**Lectura:** *`args` es un arreglo `string[]`: `args.Length` dice cuántas palabras llegaron; `args[0]` es la primera. En tus programas de clase no se usa (piden todo por `ReadLine`), pero ahí está disponible siempre.*
+
 ## Errores comunes
 
 - `int` para notas con decimal: se trunca. Usa `double`.
