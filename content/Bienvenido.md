@@ -21,5 +21,5 @@ Este es un **cuaderno de ingeniería** público: apuntes y ejemplos que escribo 
 
 ## Cómo leer los diagramas
 
-- Ves la **imagen** del diagrama; debajo, plegado bajo el botón *"Ver codigo PlantUML"*, queda el código que lo genera — despliégalo cuando quieras copiarlo o modificarlo.
+- Ves la **imagen** del diagrama; debajo, plegado bajo el botón *"Ver código PlantUML"*, queda el código que lo genera — despliégalo cuando quieras copiarlo o modificarlo.
 - Las notas se enlazan entre sí: léelas como una red, no como fichas sueltas.

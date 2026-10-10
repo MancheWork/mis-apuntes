@@ -65,7 +65,7 @@ reservar ..> buscar : <<extend>>
 @enduml
 ```
 
-**Notación visual:** (el código anterior se compila solo; pulsa "Ver codigo PlantUML" para verlo)
+**Notación visual:** (el código anterior se compila solo; pulsa "Ver código PlantUML" para verlo)
 
 **Qué se ve y cómo se lee:**
 - `<<include>>`: prestar **siempre** verifica sanciones y busca el libro (obligatorio).
@@ -127,7 +127,7 @@ Prestamo "*" --> "1" Ejemplar : sobre
 @enduml
 ```
 
-**Notación visual:** (pulsa "Ver codigo PlantUML" para ver el código)
+**Notación visual:** (pulsa "Ver código PlantUML" para ver el código)
 
 **Qué se ve y cómo se lee:**
 - `o--` con `1` y `*`: una Biblioteca **agrega** muchos Ejemplares (el Ejemplar existe aunque cambie de biblioteca → rombo hueco).
@@ -170,7 +170,7 @@ b --> s : entregar libro + fecha limite
 @enduml
 ```
 
-**Notación visual:** (pulsa "Ver codigo PlantUML" para ver el código)
+**Notación visual:** (pulsa "Ver código PlantUML" para ver el código)
 
 **Qué se ve y cómo se lee:**
 - Cada caja vertical = un participante; el orden de arriba hacia abajo = el **tiempo**.
