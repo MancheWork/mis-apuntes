@@ -73,9 +73,9 @@ string texto = File.ReadAllText(ruta);       // disco -> texto (hay que rearmar 
 
 **Lectura:** *el arreglo guarda objetos vivos; el archivo guarda texto muerto: al leer hay que reconstruir cada `Estudiante` línea por línea (eso hace Buscar con `ReadAllLines` + `for`).*
 
-## Ejemplo 1: Estudiante mínimo (de `Ejemplo.txt`)
+## Ejemplo 1: estudiante con datos fijos
 
-Crea un estudiante con datos fijos y lo muestra. Es el "hola mundo" de las clases.
+Un estudiante se crea con valores directos y se muestra. Es el punto de partida para entender clases.
 
 ```csharp
 using System;
@@ -119,7 +119,7 @@ class Program
 
 **Lectura:** *el molde `Estudiante` se llena con Juan Pérez / 20 / Analista Programador y `MostrarInformacion()` lo imprime.*
 
-## Ejemplo 2: Sistema de estudiantes con promedio (de `Código 07-01.txt`)
+## Ejemplo 2: sistema de estudiantes con promedio
 
 Sube de nivel: constructor, cálculo y menú con arreglo + búsqueda por `Id`.
 
@@ -165,7 +165,7 @@ namespace SistemaEstudiantes
 }
 ```
 
-Y el `Main` pide la cantidad, llena un `Estudiante[]` con `for` y ofrece menú (código completo, con datos que escribe el usuario):
+Y el `Main` pide la cantidad, llena un `Estudiante[]` con `for` y ofrece menú (código completo):
 
 ```csharp
 Console.Write("Ingrese la cantidad de estudiantes: ");

@@ -34,7 +34,7 @@ Agregado --> [*] : cerrar programa
 
 **Lectura:** *`Write` crea o reinicia; `Read` no cambia el estado (solo mira); `Append` suma y se queda en Agregado para seguir creciendo.*
 
-## Ejemplo 1: programa de clase (`Archivo_Modifica/Program.cs`)
+## Ejemplo 1: pedir nombre/edad y pegarlos al final
 
 Pide nombre/edad y los pega al final:
 

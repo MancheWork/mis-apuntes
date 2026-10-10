@@ -5,7 +5,7 @@ tags: [csharp, archivos]
 
 # Ejemplo completo: registro portable con las 4 operaciones
 
-Este ejemplo une **POO + las 4 operaciones de archivos** en un solo programa que sí corre en tu PC: guarda estudiantes en `Mis Documentos\Base_datos\datos.txt`, con menú para crear, ver, buscar y agregar.
+Este ejemplo une **POO + las 4 operaciones de archivos** en un solo registro portable: guarda estudiantes en `Mis Documentos\Base_datos\datos.txt`, con menú para crear, ver, buscar y agregar.
 
 **El encargo:** *registrar estudiantes (nombre + edad), verlos todos, buscar uno por nombre y agregar más sin borrar, todo persistente entre ejecuciones.*
 
@@ -159,7 +159,7 @@ static void Main()
 }
 ```
 
-**Lectura:** *el mismo menú de Código 07-01.txt, pero persistente en disco.*
+**Lectura:** *el mismo menú con arreglo y búsqueda, pero persistente en disco.*
 
 ## Checklist para armar tu propio registro
 

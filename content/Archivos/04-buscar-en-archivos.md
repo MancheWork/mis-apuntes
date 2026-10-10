@@ -42,9 +42,9 @@ stop
 
 **Lectura:** *el `while` avanza `i` línea a línea; si coincide muestra el par nombre/edad y corta con `stop`; si el ciclo termina, avisa que no existe.*
 
-## Ejemplo 1: programa de clase (`Archivo_Buscar/Program.cs`)
+## Ejemplo 1: buscar un nombre fijo y mostrar su edad
 
-Busca fijo a "Paola" y muestra nombre + edad:
+Busca un nombre concreto y muestra nombre + edad:
 
 ```csharp
 using System;

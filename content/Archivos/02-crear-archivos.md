@@ -41,9 +41,9 @@ stop
 
 **Lectura:** *el rombo decide: si el archivo existe lo vacía, si no lo crea; en ambos casos termina con un solo registro (sobrescribe).*
 
-## Ejemplo 1: programa de clase (`Archivos_Creacion/Program.cs`)
+## Ejemplo 1: crear pidiendo nombre y edad
 
-Pide nombre y edad y los guarda. Tal cual lo escribió el profe:
+Pide nombre y edad y los guarda:
 
 ```csharp
 using System;
@@ -75,7 +75,7 @@ class Program
 
 ## Ejemplo 2: versión portable y segura (complementaria)
 
-El código anterior falla en tu PC porque la carpeta `C:\Users\scarrasc\...` no existe. Esta versión crea la carpeta donde sí tienes permiso:
+El código anterior usa una ruta que puede no existir en otro equipo. Esta versión crea la carpeta donde sí hay permiso:
 
 ```csharp
 using System;
@@ -146,7 +146,7 @@ File.WriteAllText(ruta, "Nombre: " + nombre + "\nEdad: " + edad);
 
 ## Errores comunes
 
-- **Ruta quemada** `C:\Users\scarrasc\...`: cámbiala por `MyDocuments` o el programa solo corre en el PC del profe.
+- **Ruta inexistente** `C:\Users\scarrasc\...`: si la carpeta no existe, el guardado falla. Por eso se usa `MyDocuments` + `Directory.CreateDirectory`.
 - Creer que `WriteAllText` "agrega": no, **sobrescribe**. Para agregar usa [[05-modificar-archivos|AppendAllText]].
 - `int.Parse` sin `TryParse`: una letra rompe el programa.
 - Olvidar `using System.IO;`: sin eso, `File` no existe.

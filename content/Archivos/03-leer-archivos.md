@@ -37,7 +37,7 @@ p --> u : mostrar en consola
 
 **Lectura:** *el tiempo baja: el usuario pide, el programa delega en `File`, el archivo responde y el texto vuelve hasta la consola.*
 
-## Ejemplo 1: programa de clase (`Archivos_Recuperacion/Program.cs`)
+## Ejemplo 1: leer todo el archivo de una vez
 
 Lee todo el archivo de una vez y lo imprime:
 
