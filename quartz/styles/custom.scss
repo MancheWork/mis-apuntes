@@ -1,3 +1,13 @@
 @use "./variables.scss" as *;
 
 // put your custom CSS here!
+
+// En móvil (<=800px): el título del sitio se oculta para dejar más
+// pantalla al contenido. El índice (Explorer) ya trae su propio botón
+// hamburguesa en móvil y sus carpetas parten colapsadas por
+// folderDefaultState en la config.
+@media all and ($mobile) {
+  .sidebar.left .page-title {
+    display: none;
+  }
+}
