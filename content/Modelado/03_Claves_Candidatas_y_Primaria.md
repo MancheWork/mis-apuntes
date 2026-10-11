@@ -28,25 +28,25 @@ La jerarquía de claves va de lo más general a lo más específico:
 
 ```plantuml
 @startuml
-class "SUPERCLAVE" {
+class "SUPERCLAVE" as SUPERCLAVE {
   Conjunto que identifica unívocamente
 }
-class "CANDIDATA" {
+class "CANDIDATA" as CANDIDATA {
   Superclave MÍNIMA
 }
-class "PRIMARIA (PK)" {
+class "PRIMARIA (PK)" as PRIMARIA {
   Candidata ELEGIDA
 }
-class "ALTERNA" {
+class "ALTERNA" as ALTERNA {
   Candidata NO elegida
 }
-class "FORÁNEA (FK)" {
+class "FORÁNEA (FK)" as FORANEA {
   Referencia a PK de otra tabla
 }
 SUPERCLAVE <|-- CANDIDATA
-CANDIDATA <|-- PRIMARIA (PK)
+CANDIDATA <|-- PRIMARIA
 CANDIDATA <|-- ALTERNA
-FORÁNEA (FK) --> PRIMARIA (PK) : referencia
+FORANEA --> PRIMARIA : referencia
 note "Jerarquía de claves de lo general a lo específico" as N1
 @enduml
 ```

@@ -447,9 +447,9 @@ start
 :Empleado e3 = new EmpleadoTemporal("Pedro", 3, 600000);
 
 :Calcular sueldo de cada uno;
-:e1.calcularSueldo();  // → EmpleadoFijo: 500000 + bonoAntiguedad
-:e2.calcularSueldo();  // → EmpleadoPorHoras: tarifa * horas
-:e3.calcularSueldo();  // → EmpleadoTemporal: salarioBase + bonoFin
+:e1.calcularSueldo() // EmpleadoFijo: 500000 + bonoAntiguedad;
+:e2.calcularSueldo() // EmpleadoPorHoras: tarifa * horas;
+:e3.calcularSueldo() // EmpleadoTemporal: salarioBase + bonoFin;
 
 stop
 @enduml

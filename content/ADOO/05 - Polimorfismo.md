@@ -142,9 +142,7 @@ start
 :figuras.add(new Triangulo(3, 8));
 
 :double total = 0;
-:for (Figura f : figuras) {
-    total += f.calcularArea();
-}
+:for (Figura f : figuras) total += f.calcularArea();
 
 note right
   En tiempo de ejecución, Java

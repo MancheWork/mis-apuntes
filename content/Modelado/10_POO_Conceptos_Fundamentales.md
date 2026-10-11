@@ -758,7 +758,7 @@ public class Main {
 
 ```plantuml
 @startuml
-class CLASE <<Plantilla>> as CL
+class "CLASE (Plantilla)" as CL
 
 package "Pilares de POO" {
   class ABSTRACCIÓN {

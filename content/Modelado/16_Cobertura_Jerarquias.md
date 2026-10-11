@@ -76,7 +76,7 @@ Responde a: **¿una instancia puede pertenecer a MÁS DE UNA subclase simultáne
 ```plantuml
 @startuml
 package "Total (doble línea)" {
-  class EMPLEADO_T <<(d,Disjunta)>>
+  class EMPLEADO_T <<d,Disjunta>>
   class OPERARIO
   class ADMINISTRATIVO
 
@@ -85,7 +85,7 @@ package "Total (doble línea)" {
 }
 
 package "Parcial (línea simple)" {
-  class VEHICULO_P <<(d,Disjunta)>>
+  class VEHICULO_P <<d,Disjunta>>
   class AUTO
   class CAMION
 

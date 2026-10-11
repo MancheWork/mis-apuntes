@@ -127,25 +127,25 @@ end note
 @startuml
 start
 :¿Aparece un dato en el dominio?;
-if (¿Su valor depende de una\nsola entidad?) then (SÍ)
-  :¿Tiene sentido sin\nel vínculo?;
-  if (¿Tiene sentido\nsin el vínculo?) then (SÍ)
-    #salmon:ATRIBUTO PROPIO\n(dentro de la caja);
-    note right: El valor es intrínseco\na la entidad
-  else (NO)
-    #salmon:ATRIBUTO DE RELACIÓN\n(en la relación);
+if (¿Su valor depende de una sola entidad?) then (si)
+  :¿Tiene sentido sin el vínculo?;
+  if (¿Tiene sentido sin el vínculo?) then (si)
+    :ATRIBUTO PROPIO (dentro de la caja);
+    note right: El valor es intrínseco a la entidad
+  else (no)
+    :ATRIBUTO DE RELACIÓN (en la relación);
   endif
-else (NO)
-  if (¿La relación es N:M?) then (SÍ)
-    #salmon:ATRIBUTO DE RELACIÓN\n(rombo + tabla intermedia);
-    note right: Debe ubicarse\nen la relación N:M
-  else (NO)
-    if (¿Es 1:N?) then (SÍ)
-      #salmon:Lado N\nde las entidades;
-      note right: Puede ir en la\nentidad del lado N
-    else (NO / 1:1)
-      #salmon:Cualquiera\nde las 2 entidades;
-      note right: En 1:1 puede\nir en cualquiera
+else (no)
+  if (¿La relación es N:M?) then (si)
+    :ATRIBUTO DE RELACIÓN (rombo + tabla intermedia);
+    note right: Debe ubicarse en la relación N:M
+  else (no)
+    if (¿Es 1:N?) then (si)
+      :Lado N de las entidades;
+      note right: Puede ir en la entidad del lado N
+    else (no, uno a uno)
+      :Cualquiera de las 2 entidades;
+      note right: En 1:1 puede ir en cualquiera
     endif
   endif
 endif

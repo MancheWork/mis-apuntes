@@ -318,25 +318,25 @@ end note
 skinparam backgroundColor #FEFEFE
 
 start
-:¿La clase B puede existir\nsin la clase A?
+:¿La clase B puede existir sin la clase A?;
 
-if (¿B existe sin A?) then (Sí)
-    :¿A y B colaborean\npermanente y bidireccionalmente?
-    if (¿Colaboran permanentemente?) then (Sí)
-        #C9971C:ASOCIACIÓN
-        note right: Persona ↔ Universidad
-    else (No, es temporal)
-        #5F6672:DEPENDENCIA
+if (¿B existe sin A?) then (si)
+    :¿A y B colaboran permanente y bidireccionalmente?;
+    if (¿Colaboran permanentemente?) then (si)
+        #C9971C:ASOCIACION;
+        note right: Persona con Universidad
+    else (no, es temporal)
+        #5F6672:DEPENDENCIA;
         note right: Reporte usa Datos
     endif
-else (No)
-    :¿Si se destruye A,\nse destruye B?
-    if (¿Se destruyen juntos?) then (Sí)
-        #C0564B:COMPOSICIÓN
-        note right: Computadora ◆— Procesador
-    else (No, B sobrevive)
-        #C9971C:AGREGACIÓN
-        note right: Universidad ◇— Departamento
+else (no)
+    :¿Si se destruye A, se destruye B?;
+    if (¿Se destruyen juntos?) then (si)
+        #C0564B:COMPOSICION;
+        note right: Computadora con Procesador
+    else (no, B sobrevive)
+        #C9971C:AGREGACION;
+        note right: Universidad con Departamento
     endif
 endif
 

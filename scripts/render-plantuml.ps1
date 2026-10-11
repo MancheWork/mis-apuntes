@@ -62,7 +62,7 @@ foreach ($md in $mdFiles) {
 
         $prevEap = $ErrorActionPreference
         $ErrorActionPreference = "Continue"
-        $out = & java "-Dfile.encoding=UTF-8" -jar $jar -tsvg $pumlPath 2>&1 | Out-String
+        $out = & java "-Dfile.encoding=UTF-8" -jar $jar -tsvg -nbthread 1 $pumlPath 2>&1 | Out-String
         $javaExit = $LASTEXITCODE
         $ErrorActionPreference = $prevEap
         $svgOk = Test-Path -LiteralPath $svgPath

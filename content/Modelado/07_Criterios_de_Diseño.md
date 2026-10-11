@@ -179,12 +179,11 @@ package "❌ MAL (atributo compuesto)" as mal {
   entity "CLIENTE" as c1 {
     * id_cliente : PK
     --
-    dirección (compuesto) : {
+    dirección (compuesto)
       calle
       numero
       ciudad
       pais
-    }
   }
 }
 
