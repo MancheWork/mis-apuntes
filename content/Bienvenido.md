@@ -9,7 +9,9 @@ Este es un **cuaderno de ingeniería** público: apuntes y ejemplos que escribo 
 ## Qué vas a encontrar
 
 - **[[UML/index|Diagramas UML]]**: los 14 diagramas oficiales de UML 2, cada uno con una explicación didáctica de *qué es, cuándo se usa y cómo se lee*, **2 ejemplos completos** en PlantUML y un **ejemplo construido paso a paso** que recorre toda la notación.
-- **[[Archivos/index|Archivos en C#]]**: los 4 programas didácticos de la Clase 8 (crear, leer, buscar y agregar `datos.txt` con `System.IO`), repaso POO y un ejemplo completo portable que los une.
+- **[[Archivos/index|Archivos en C#]]**: los 4 programas de crear, leer, buscar y agregar `datos.txt` con `System.IO`, repaso POO y un ejemplo completo portable que los une.
+- **[[Modelado/index|Modelado de Información]]**: diseño de bases de datos de la A a la Z — entidades, claves, cardinalidades, MER extendido y calidad de esquemas, con ejercicios resueltos.
+- **[[ADOO/index|Análisis y Diseño OO]]**: el paradigma orientado a objetos — pilares, SOLID, diagramas UML con ejemplos aplicados y ejercicios con solución.
 - **Ejemplos listos para copiar**: todo bloque de código se puede pegar y probar tal cual.
 - **Matemáticas y código renderizados**: LaTeX se dibuja en la página y los fragmentos de código se resaltan.
 

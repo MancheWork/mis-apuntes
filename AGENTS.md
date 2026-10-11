@@ -10,6 +10,16 @@ Prohibidas las meta-referencias al origen del material. No usar frases como:
 - "programa de clase" / "de `Ejemplo.txt`" / "de `Código 07-01.txt`"
 - "en tu PC" / "el PC del profe" / referencias a rutas personales (`scarrasc`, `aukin`)
 
+## Datos personales (regla de seguridad estricta)
+
+El cuaderno es público. **Nunca** se publica información personal u organizativa:
+
+- No nombres de docentes, correos institucionales, teléfonos.
+- No códigos de asignatura, aulas, horarios, semestres, carreras ni rutinas semanales.
+- No rutas locales con usuario, ni historiales de organización personales.
+- Frontmatter permitido: `title`, `tags`, `tipo`, `materia` (solo el nombre del ramo) y `aliases`.
+- Antes de cada publicación, verificar con búsqueda: `docente|correo|@|aula|horario|semestre|código|carrera|202703|L_301|nombres propios`.
+
 En su lugar: explicar el concepto directamente (qué es, para qué sirve, cómo funciona, dónde va),
 con ejemplos que se sostienen solos y contexto técnico portable (`MyDocuments`, rutas relativas).
 
