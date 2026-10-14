@@ -20,12 +20,12 @@ jobs:
     runs-on: ubuntu-latest
     name: Build Quartz
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Setup Java (PlantUML)
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: 21
@@ -38,7 +38,7 @@ jobs:
 
       - name: Cache PlantUML jar
         id: plantuml-cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.plantuml/plantuml.jar
           key: plantuml-v1.2026.8
@@ -53,13 +53,13 @@ jobs:
         run: pwsh -NoProfile -File scripts/render-plantuml.ps1 -ContentDir content -JarPath "$HOME/.plantuml/plantuml.jar" -Rewrite
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
 
       - name: Cache Quartz plugins
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: .quartz/plugins
           key: ${{ runner.os }}-plugins-${{ hashFiles('quartz.lock.json') }}
@@ -75,7 +75,7 @@ jobs:
         run: npx quartz build -d content -v
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: public
 
@@ -89,4 +89,4 @@ jobs:
     steps:
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
